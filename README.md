@@ -20,3 +20,18 @@ RUN sed -i 's|APACHE_LOG_DIR=/var/log/apache2|APACHE_LOG_DIR=/irissys/data/webga
 ```
 
 We set the Event Log Level in Web Gateway to Ev9r.
+![screenshot](https://github.com/oliverwilms/bilder/blob/main/wgw.png)
+
+I created data0, data1, and data2 subdirectories for our three webgateway pods. I copy the CSP.log and access.log files from our three webgateway pods stored on persistent volumes:
+```
+oc cp iris-webgateway-0:/irissys/data/webgateway/access.log data0/access.log
+oc cp iris-webgateway-1:/irissys/data/webgateway/access.log data1/access.log
+oc cp iris-webgateway-2:/irissys/data/webgateway/access.log data2/access.log
+oc cp iris-webgateway-0:/irissys/data/webgateway/CSP.log data0/CSP.log
+oc cp iris-webgateway-1:/irissys/data/webgateway/CSP.log data1/CSP.log
+oc cp iris-webgateway-2:/irissys/data/webgateway/CSP.log data2/CSP.log
+```
+
+I end up with three subdirectories each containing access.log and CSP.log files.
+
+I created persistent classes otw.wgw.apache and otw.wgw.csp to import lines from access.log and CSP.log. access.log contains one line per request and it includes the response status. CSP.log contains separate lines for requests and responses.
