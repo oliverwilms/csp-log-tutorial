@@ -14,3 +14,9 @@ Recently we were asked to test pods failovers and Availability Zone fail-over. W
 The other day while one feeder sent 5000 messages, we simulated the AZ failure. The feeder received 4933 responses. The message bank banked 4937 messages.
 
 We store access.log and CSP.log in the data directory on the webgateway pods. We added this line to the Dockerfile of our webgateway image:
+
+```
+RUN sed -i 's|APACHE_LOG_DIR=/var/log/apache2|APACHE_LOG_DIR=/irissys/data/webgateway|g' /etc/apache2/envvars
+```
+
+We set the Event Log Level in Web Gateway to Ev9r.
