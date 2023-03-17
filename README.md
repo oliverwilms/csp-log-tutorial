@@ -34,4 +34,18 @@ oc cp iris-webgateway-2:/irissys/data/webgateway/CSP.log data2/CSP.log
 
 I end up with three subdirectories each containing access.log and CSP.log files.
 
+We count the number of requests processed in any webgateway pod using this command:
+```
+cat access.log | grep InComingOTW | wc -l
+```
+
+We count the number of requests and responses recorded in CSP.log using this command:
+```
+cat CSP.log | grep InComingOTW | wc -l
+```
+
+Normally we expect twice as many lines in CSP.log compared to access.log. Sometimes we find more lines in CSP.log than the expected double the number of lines in access.log. I remember seeing less lines than expected in CSP.log compared to what was in access.log at least once. We suspect this was due to a 500 response recorded in access.log, which was not recorded in CSP.log, properly because the webgateway pod was terminated.
+
+How can I analyze many lines of requests and explain what happened?
+
 I created persistent classes otw.wgw.apache and otw.wgw.csp to import lines from access.log and CSP.log. access.log contains one line per request and it includes the response status. CSP.log contains separate lines for requests and responses.
