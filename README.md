@@ -3,7 +3,7 @@
 ## Prerequisites
 Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed.
 
-I will describe in this tutorial how I use access.log and CSP.log files in webgateway pods to track requests and responses.
+I will describe in this tutorial how I try to use access.log and CSP.log files in webgateway pods to track requests and responses.
 
 My team works with IRIS containers running on Red Hat OpenShift Container Platform (Kubernetes) in AWS. We deployed three webgateway pods receiving requests via a Network Load Balancer. The requests get processed in an InterOperability production running in three compute pods. We use Message Bank production running on mirrored data pods as one place to review all messages processed by any compute pod.
 
