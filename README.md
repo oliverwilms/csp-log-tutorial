@@ -70,3 +70,17 @@ Do ##class(otw.wgw.csp).ImportMessages(pFile,.pLines,.pFilter,1)
 ```
 
 pLines and pFilter are output parameters which are not that important right now. pImport controls if the Extent gets deleted before importing data.
+
+After we import data we can run SQL queries like this one:
+```
+SELECT count(*) FROM otw_wgw.csp where wgEvent='WebGateway.ProcessRequest'
+```
+
+If the count returned is an odd number, it indicates there is a mismatch between requests and responses.
+
+We can run the next query to identify filenames in the requests that do not have a matching response:
+```
+select zFilename, count(*) from otw_wgw.csp group by zFilename having count(*) = 1
+```
+
+Please note that I use method CalcFilename to set the zFilename property before I save a line imported from CSP.log file.
