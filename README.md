@@ -4,6 +4,11 @@
 Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed.
 
 I created a git folder inside the IRIS mgr directory. I right clicked the git folder and chose Git Bash Here from the context menu.
+```
+git clone https://github.com/oliverwilms/csp-log-tutorial.git
+```
+
+Clone my csp-log-tutorial GitHub repo if you like to try it out for yourself.
 
 I will describe in this tutorial how I try to use access.log and CSP.log files in webgateway pods to track requests and responses.
 
