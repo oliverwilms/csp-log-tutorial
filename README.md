@@ -62,3 +62,11 @@ Open IRIS terminal and import the classes in src directory from csp-log-tutorial
 Set src="C:\InterSystems\IRISHealth\mgr\git\csp-log-tutorial\src"
 Do $system.OBJ.LoadDir(src,"ck",,1)
 ```
+
+If you do not have your own CSP.log file to analyze, you can import the one provided in csp-log-tutorial repo:
+```
+Set pFile="C:\InterSystems\IRISHealth\mgr\git\csp-log-tutorial\wg2_20230314_CSP.log"
+Do ##class(otw.wgw.csp).ImportMessages(pFile,.pLines,.pFilter,1)
+```
+
+pLines and pFilter are output parameters which are not that important right now. pImport controls if the Extent gets deleted before importing data.
