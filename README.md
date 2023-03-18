@@ -56,3 +56,9 @@ Normally we expect twice as many lines in CSP.log compared to access.log. Someti
 How can I analyze many lines of requests and explain what happened?
 
 I created persistent classes otw.wgw.apache and otw.wgw.csp to import lines from access.log and CSP.log. access.log contains one line per request and it includes the response status. CSP.log contains separate lines for requests and responses.
+
+Open IRIS terminal and import the classes in src directory from csp-log-tutorial repo we had cloned earlier:
+```
+Set src="C:\InterSystems\IRISHealth\mgr\git\csp-log-tutorial\src"
+Do $system.OBJ.LoadDir(src,"ck",,1)
+```
