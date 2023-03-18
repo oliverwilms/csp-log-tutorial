@@ -162,7 +162,7 @@ ClassMethod ImportMessages(pFile As %String, ByRef pLines, ByRef pFilter = -1, p
 		Set mgrDir = $ZU(12)
 		Set pFile = mgrDir_"/csplog/CSP.log"
 	}
-	Set tSC = ..ReadLogLines(pFile,.pLines,.pFilter,pImport)
+	Set tSC = ..ReadLogLines(pFile,.pLines,.pFilter,pImport,pDebug)
 	If $$$ISERR(tSC) {
 		Set x = $System.Status.GetErrorText(tSC)
 		If pDebug Write x,!
@@ -210,7 +210,9 @@ ClassMethod ReadLogLines(pFile As %String, ByRef pLines, ByRef pFilter = 10, pIm
 			Use pFile
 			Set pos = $ZPOS
 			Set pos = $ZSEEK(0,0)
-			Set tWebgateway = ##class(otw.wgw.import).getWebgatewayFromFilePath(pFile)
+			Try {
+				Set tWebgateway = ##class(otw.wgw.import).getWebgatewayFromFilePath(pFile)
+			} Catch { Set tWebgateway = "" }
 			For {
 				Set pos = $ZPOS
 				Read tText
