@@ -10,7 +10,7 @@ git clone https://github.com/oliverwilms/csp-log-tutorial.git
 
 Clone my csp-log-tutorial GitHub repo if you like to try it out for yourself.
 
-I will describe in this tutorial how I try to use access.log and CSP.log files in webgateway pods to track requests and responses.
+## I will describe in this tutorial how I try to use access.log and CSP.log files in webgateway pods to track requests and responses.
 
 My team works with IRIS containers running on Red Hat OpenShift Container Platform (Kubernetes) in AWS. We deployed three webgateway pods receiving requests via a Network Load Balancer. The requests get processed in an InterOperability production running in three compute pods. We use Message Bank production running on mirrored data pods as one place to review all messages processed by any compute pod.
 
@@ -53,7 +53,7 @@ cat CSP.log | grep InComingOTW | wc -l
 
 Normally we expect twice as many lines in CSP.log compared to access.log. Sometimes we find more lines in CSP.log than the expected double the number of lines in access.log. I remember seeing less lines than expected in CSP.log compared to what was in access.log at least once. We suspect this was due to a 500 response recorded in access.log, which was not recorded in CSP.log, properly because the webgateway pod was terminated.
 
-How can I analyze many lines of requests and explain what happened?
+## How can I analyze many lines of requests and explain what happened?
 
 I created persistent classes otw.wgw.apache and otw.wgw.csp to import lines from access.log and CSP.log. access.log contains one line per request and it includes the response status. CSP.log contains separate lines for requests and responses.
 
@@ -92,7 +92,12 @@ Set pFile="C:\InterSystems\IRISHealth\mgr\git\csp-log-tutorial\wg2_20230314_acce
 Do ##class(otw.wgw.apache).ImportMessages(pFile,.pLines,.pFilter,1)
 ```
 
-What else do I want to do if I find the time?
+We can run this query to get the count of messages related to this tutorial:
+```
+SELECT count(*) FROM otw_wgw.apache where Text like '%tutorial%'
+```
+
+## What else do I want to do if I find the time?
 
 I like to combine the data from apache and csp tables and possibly include data gathered from the compute pods.
 
