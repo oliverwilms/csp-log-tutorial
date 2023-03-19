@@ -16,7 +16,7 @@ My team works with IRIS containers running on Red Hat OpenShift Container Platfo
 
 We tested our interfaces using feeder pods to send many request messages to the Network Load Balancer. We sent 100k messages and tested how long it would take to process all messages into the message bank and record the responses on the feeders. The count of banked messages in Message Bank and responses received by the feeders matched the number of incoming messages.
 
-Recently we were asked to test pods failovers and Availability Zone fail-over. We simulate an availability zone failure by denying all incoming and outgoing traffic to a subnet (one of three availability zones) via the AWS console while feeders are sending many request messages to the Network Load Balancer. It has been quite challenging to account for all messages sent by the feeders.
+Recently we were asked to test pods failovers and Availability Zone fail-over. We delete individual pods with or without force and grace period. We simulate an availability zone failure by denying all incoming and outgoing traffic to a subnet (one of three availability zones) via the AWS console while feeders are sending many request messages to the Network Load Balancer. It has been quite challenging to account for all messages sent by the feeders.
 
 The other day while one feeder sent 5000 messages, we simulated the AZ failure. The feeder received 4933 responses. The message bank banked 4937 messages.
 
@@ -84,3 +84,16 @@ select zFilename, count(*) from otw_wgw.csp group by zFilename having count(*) =
 ```
 
 Please note that I use method CalcFilename to set the zFilename property before I save a line imported from CSP.log file.
+
+I also incuded a sample access.log file which we can import like this:
+If you do not have your own CSP.log file to analyze, you can import the one provided in csp-log-tutorial repo:
+```
+Set pFile="C:\InterSystems\IRISHealth\mgr\git\csp-log-tutorial\wg2_20230314_access.log"
+Do ##class(otw.wgw.apache).ImportMessages(pFile,.pLines,.pFilter,1)
+```
+
+What else do I want to do if I find the time?
+
+I like to combine the data from apache and csp tables and possibly include data gathered from the compute pods.
+
+I think I can use the data in access.log to determine when there was an outage on a webgateway pod.
