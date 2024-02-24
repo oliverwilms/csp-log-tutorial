@@ -86,7 +86,7 @@ select zFilename, count(*) from otw_wgw.csp group by zFilename having count(*) =
 Please note that I use method CalcFilename to set the zFilename property before I save a line imported from CSP.log file.
 
 I also incuded a sample access.log file which we can import like this:
-If you do not have your own CSP.log file to analyze, you can import the one provided in csp-log-tutorial repo:
+If you do not have your own access.log file to analyze, you can import the one provided in csp-log-tutorial repo:
 ```
 Set pFile="C:\InterSystems\IRISHealth\mgr\git\csp-log-tutorial\wg2_20230314_access.log"
 Do ##class(otw.wgw.apache).ImportMessages(pFile,.pLines,.pFilter,1)
